@@ -1,0 +1,19 @@
+--- mupdf-1.8/source/fitz/load-jpx.c
++++ mupdf-1.8/source/fitz/load-jpx.c
+@@ -1,15 +1,7 @@
+ #include "mupdf/fitz.h"
+ 
+-/* Without the definition of OPJ_STATIC, compilation fails on windows
+- * due to the use of __stdcall. We believe it is required on some
+- * linux toolchains too. */
+-#define OPJ_STATIC
+-#ifndef _MSC_VER
+-#define OPJ_HAVE_STDINT_H
+-#endif
++#include <openjpeg-2.1/openjpeg.h>
+ 
+-#include <openjpeg.h>
+-
+ static void fz_opj_error_callback(const char *msg, void *client_data)
+ {
+ 	fz_context *ctx = (fz_context *)client_data;

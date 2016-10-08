@@ -1,0 +1,39 @@
+From 5b9635fb4d7f47a922dae20d7908f7aeff560955 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Mon, 3 Oct 2016 12:50:17 +0300
+Subject: [PATCH 3/3] Don't inherit geo, images, plugins, scripts & disk cache
+ from parent
+
+---
+ surf.c | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index 831ed2f..392f04d 100644
+--- a/surf.c
++++ b/surf.c
+@@ -1134,20 +1134,10 @@ newwindow(Client *c, const Arg *arg, gboolean noembed)
+ 		snprintf(tmp, LENGTH(tmp), "%u", (int)embed);
+ 		cmd[i++] = tmp;
+ 	}
+-	if (!allowgeolocation)
+-		cmd[i++] = "-g";
+-	if (!loadimages)
+-		cmd[i++] = "-i";
+ 	if (kioskmode)
+ 		cmd[i++] = "-k";
+-	if (!enableplugins)
+-		cmd[i++] = "-p";
+-	if (!enablescripts)
+-		cmd[i++] = "-s";
+ 	if (showxid)
+ 		cmd[i++] = "-x";
+-	if (enablediskcache)
+-		cmd[i++] = "-D";
+ 	cmd[i++] = "-c";
+ 	cmd[i++] = cookiefile;
+ 	cmd[i++] = "--";
+-- 
+2.7.3
+
