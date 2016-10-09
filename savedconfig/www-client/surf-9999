@@ -46,11 +46,8 @@ static Bool allowgeolocation      = FALSE;
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(d, r) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
-	     "echo $0 $2;" \
-	     "urxvtc -e /bin/sh -c \"wget --user-agent='$1'" \
-	     " --referer '$2' --load-cookies $3 '$0';" \
-	     "notify-send 'Download finished' '$0';\"", \
-	     d, useragent, r, cookiefile, NULL \
+	     "urxvtc -e /bin/sh -c \"~/.surf/download.sh '$0' '$1' '$2' '$3'\"", \
+	     d, r, useragent, cookiefile, NULL \
 	} \
 }
 
