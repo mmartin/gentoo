@@ -1,4 +1,4 @@
-From 589fa672eeaf9cbc3671ed7e76d512c6c206a441 Mon Sep 17 00:00:00 2001
+From 3ddac57bf94c1c9b19e960186a8cf653fa3386ea Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Tue, 27 Sep 2016 05:23:18 +0300
@@ -6,9 +6,9 @@ Subject: [PATCH] incremental output
 
 ---
  config.def.h | 1 +
- dmenu.1      | 4 ++++
+ dmenu.1      | 5 ++++-
  dmenu.c      | 8 +++++++-
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
 index 1edb647..cb92c15 100644
@@ -23,18 +23,19 @@ index 1edb647..cb92c15 100644
  static const char *fonts[] = {
  	"monospace:size=10"
 diff --git a/dmenu.1 b/dmenu.1
-index d3ab805..e5bf42f 100644
+index 9eab758..9a02743 100644
 --- a/dmenu.1
 +++ b/dmenu.1
-@@ -18,6 +18,7 @@ dmenu \- dynamic menu
- .IR color ]
- .RB [ \-nf
- .IR color ]
-+.RB [ \-r ]
- .RB [ \-sb
- .IR color ]
- .RB [ \-sf
-@@ -58,6 +59,9 @@ from 0.
+@@ -3,7 +3,7 @@
+ dmenu \- dynamic menu
+ .SH SYNOPSIS
+ .B dmenu
+-.RB [ \-bfiv ]
++.RB [ \-bfirv ]
+ .RB [ \-l
+ .IR lines ]
+ .RB [ \-m
+@@ -57,6 +57,9 @@ from 0.
  .BI \-p " prompt"
  defines the prompt to be displayed to the left of the input field.
  .TP
@@ -45,10 +46,10 @@ index d3ab805..e5bf42f 100644
  defines the font or font set used.
  .TP
 diff --git a/dmenu.c b/dmenu.c
-index 8e84fbd..6ed868f 100644
+index 9278e91..ddb6f50 100644
 --- a/dmenu.c
 +++ b/dmenu.c
-@@ -436,6 +436,10 @@ keypress(XKeyEvent *ev)
+@@ -455,6 +455,10 @@ keypress(XKeyEvent *ev)
  		match();
  		break;
  	}
@@ -59,16 +60,16 @@ index 8e84fbd..6ed868f 100644
  	drawmenu();
  }
  
-@@ -601,7 +605,7 @@ static void
+@@ -635,7 +639,7 @@ setup(void)
+ static void
  usage(void)
  {
- 	fputs("usage: dmenu [-b] [-f] [-i] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
--	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-v]\n", stderr);
-+	      "             [-nb color] [-nf color] [-r] [-sb color] [-sf color] [-v]\n", stderr);
+-	fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
++	fputs("usage: dmenu [-bfirv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+ 	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
  	exit(1);
  }
- 
-@@ -619,6 +623,8 @@ main(int argc, char *argv[])
+@@ -655,6 +659,8 @@ main(int argc, char *argv[])
  			topbar = 0;
  		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
  			fast = 1;
