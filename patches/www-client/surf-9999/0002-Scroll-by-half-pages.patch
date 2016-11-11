@@ -2,7 +2,7 @@ From 159bbb6708538a0edc473ac969d54efd7234e907 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Tue, 27 Sep 2016 12:22:06 +0300
-Subject: [PATCH 2/3] Scroll by half-pages
+Subject: [PATCH 2/4] Scroll by half-pages
 
 ---
  surf.c | 4 +---
