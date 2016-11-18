@@ -1,0 +1,44 @@
+From 3de186976ffa9998076220af382376db02ef0145 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Fri, 18 Nov 2016 23:07:21 +0200
+Subject: [PATCH 3/3] Fix sound system / sound device name confusion
+
+---
+ src/metro.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/metro.c b/src/metro.c
+index 2611792..41e2367 100644
+--- a/src/metro.c
++++ b/src/metro.c
+@@ -575,7 +575,7 @@ static int set_sound_device_name(metro_t* metro,
+  */
+ 
+ static int new_sound_system(metro_t* metro) {
+-  metro->options->sound_device_name = strdup(DEFAULT_SOUND_SYSTEM);
++  metro->options->soundsystem = strdup(DEFAULT_SOUND_SYSTEM);
+   comm_client_query(metro->inter_thread_comm,
+                     MESSAGE_TYPE_SET_SOUNDSYSTEM,
+ 		    strdup(DEFAULT_SOUND_SYSTEM));
+@@ -606,7 +606,7 @@ static int set_sound_system(metro_t* metro,
+     free(metro->options->soundsystem);
+   else
+     fprintf(stderr,
+-	    "free() error: metro->options->sound_device_name not allocated.\n");
++	    "free() error: metro->options->soundsystem not allocated.\n");
+   metro->options->soundsystem = strdup(sound_system);
+   comm_client_query(metro->inter_thread_comm,
+                     MESSAGE_TYPE_SET_SOUNDSYSTEM, strdup(sound_system));
+@@ -621,7 +621,7 @@ static int set_sound_system(metro_t* metro,
+ }
+ 
+ /*
+- * option system callback for spotting the sound device name
++ * option system callback for spotting the sound system
+  */
+ static const char* get_sound_system(metro_t* metro,
+                                          int n _U_, char** option_name _U_)
+-- 
+2.7.3
+
