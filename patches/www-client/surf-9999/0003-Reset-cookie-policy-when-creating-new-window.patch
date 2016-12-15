@@ -2,7 +2,7 @@ From 7e2f3fca5580567989d4c33f34c41f2eaf2feafa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sun, 9 Oct 2016 02:45:10 +0300
-Subject: [PATCH 3/4] Reset cookie policy when creating new window
+Subject: [PATCH 3/5] Reset cookie policy when creating new window
 
 ---
  surf.c | 2 ++

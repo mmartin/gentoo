@@ -1,0 +1,42 @@
+From 1cd6e7a4bfc246a05f9fd1a7aa550ffc422dd321 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Thu, 15 Dec 2016 13:09:59 +0200
+Subject: [PATCH 5/5] Set urgency hint when finished loading
+
+---
+ surf.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/surf.c b/surf.c
+index da1db7c..8880614 100644
+--- a/surf.c
++++ b/surf.c
+@@ -5,6 +5,7 @@
+ #include <signal.h>
+ #include <X11/X.h>
+ #include <X11/Xatom.h>
++#include <X11/Xutil.h>
+ #include <gtk/gtk.h>
+ #include <gdk/gdkx.h>
+ #include <gdk/gdk.h>
+@@ -853,6 +854,16 @@ loadstatuschange(WebKitWebView *view, GParamSpec *pspec, Client *c)
+ 			soup_cache_flush(diskcache);
+ 			soup_cache_dump(diskcache);
+ 		}
++		// fallthrough
++	case WEBKIT_LOAD_FAILED: {
++		Window win = GDK_WINDOW_XID(GTK_WIDGET(c->win)->window);
++		XWMHints *hints = XGetWMHints(dpy, win);
++		if (hints == NULL)
++			hints = XAllocWMHints();
++		hints->flags |= XUrgencyHint;
++		XSetWMHints(dpy, win, hints);
++		XFree(hints);
++		}
+ 		break;
+ 	default:
+ 		break;
+-- 
+2.7.3
+

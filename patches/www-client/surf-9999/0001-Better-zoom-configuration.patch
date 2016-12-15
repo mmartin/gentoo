@@ -2,7 +2,7 @@ From 6c901103e80821f3bb1a247850c078b87cdca4a8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Tue, 27 Sep 2016 12:21:20 +0300
-Subject: [PATCH 1/4] Better zoom configuration
+Subject: [PATCH 1/5] Better zoom configuration
 
 ---
  config.def.h |  2 +-

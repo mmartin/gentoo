@@ -2,7 +2,7 @@ From 3a909d6076390ad2cc8fe33e8c41077281b87867 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Fri, 11 Nov 2016 15:27:38 +0200
-Subject: [PATCH 4/4] Revert "Close standard output after printing XID, patch
+Subject: [PATCH 4/5] Revert "Close standard output after printing XID, patch
  due Abby Cedar."
 
 This reverts commit 96041e5ba2e19a077cb8aead03899c0b1eef529a.
