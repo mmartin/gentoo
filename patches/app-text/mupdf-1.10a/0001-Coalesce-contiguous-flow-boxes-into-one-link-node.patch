@@ -1,0 +1,13 @@
+--- mupdf-1.10a-source/source/html/html-layout.c	2016-11-28 15:34:04.000000000 +0200
++++ mupdf-1.10a-source-fixed/source/html/html-layout.c	2017-01-27 06:52:30.174697906 +0200
+@@ -1949,8 +1949,8 @@
+ 			/* Coalesce contiguous flow boxes into one link node */
+ 			end = flow->x + flow->w;
+ 			while (next &&
+-					next->y == flow->y &&
+-					next->h == flow->h &&
++					abs((next->x + next->w/2) - (flow->x + flow->w/2)) <= next->w + flow->w &&
++					abs((next->y + next->h/2) - (flow->y + flow->h/2)) <= next->h + flow->h &&
+ 					has_same_href(next->box, href))
+ 			{
+ 				end = next->x + next->w;
