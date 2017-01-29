@@ -1,5 +1,5 @@
 pre_src_prepare() {
-        [[ ${EAPI:-0} == [012345] && " gtick-0.5.0 sooperlooper-1.7.3 zathura-pdf-mupdf-0.3.1 " =~ " ${P} " ]] || return
+        [[ ${EAPI:-0} == [012345] && " gtick-0.5.0 sooperlooper-1.7.3 girara-0.2.7 zathura-pdf-mupdf-0.3.1 " =~ " ${P} " ]] || return
 
         ewarn "Injecting epatch_user"
 
