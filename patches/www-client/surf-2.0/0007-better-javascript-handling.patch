@@ -1,0 +1,81 @@
+From f5a08c03e8bd538801e5b03533865638b9a25d99 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Mon, 17 Apr 2017 14:46:15 +0300
+Subject: [PATCH 7/7] better javascript handling?
+
+---
+ surf.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index 354dbb2..22ca4b1 100644
+--- a/surf.c
++++ b/surf.c
+@@ -165,6 +165,7 @@ static void setparameter(Client *c, int refresh, ParamName p, const Arg *a);
+ static const char *getstyle(const char *uri);
+ static void setstyle(Client *c, const char *stylefile);
+ static void runscript(Client *c);
++static void runscriptarg(Client *c, const Arg *a);
+ static void evalscript(Client *c, const char *jsstr, ...);
+ static void updatewinid(Client *c);
+ static void handleplumb(Client *c, const char *uri);
+@@ -287,7 +288,6 @@ setup(void)
+ 
+ 	/* dirs and files */
+ 	cookiefile = buildfile(cookiefile);
+-	scriptfile = buildfile(scriptfile);
+ 	cachedir   = buildpath(cachedir);
+ 
+ 	gdkkb = gdk_seat_get_keyboard(gdk_display_get_default_seat(gdpy));
+@@ -792,12 +792,24 @@ setstyle(Client *c, const char *stylefile)
+ void
+ runscript(Client *c)
+ {
++	Arg a;
++	a.v = scriptfile;
++	runscriptarg(c, &a);
++}
++
++void
++runscriptarg(Client *c, const Arg *a)
++{
+ 	gchar *script;
+ 	gsize l;
+ 
+-	if (g_file_get_contents(scriptfile, &script, &l, NULL) && l)
++	char *file = buildfile(a->v);
++
++	if (g_file_get_contents(file, &script, &l, NULL) && l)
+ 		evalscript(c, script);
++
+ 	g_free(script);
++	g_free(file);
+ }
+ 
+ void
+@@ -810,7 +822,13 @@ evalscript(Client *c, const char *jsstr, ...)
+ 	script = g_strdup_vprintf(jsstr, ap);
+ 	va_end(ap);
+ 
++	WebKitSettings *s = webkit_web_view_get_settings(c->view);
++	gboolean js = webkit_settings_get_enable_javascript(s);
++
++	webkit_settings_set_enable_javascript(s, TRUE);
+ 	webkit_web_view_run_javascript(c->view, script, NULL, NULL, NULL);
++	webkit_settings_set_enable_javascript(s, js);
++
+ 	g_free(script);
+ }
+ 
+@@ -922,7 +940,6 @@ cleanup(void)
+ 	while (clients)
+ 		destroyclient(clients);
+ 	g_free(cookiefile);
+-	g_free(scriptfile);
+ 	g_free(stylefile);
+ 	g_free(cachedir);
+ 	XCloseDisplay(dpy);
+-- 
+2.10.2
+

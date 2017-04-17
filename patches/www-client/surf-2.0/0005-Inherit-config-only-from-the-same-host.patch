@@ -1,0 +1,123 @@
+From 3cc04d6dfeaf2e9a7d017241d0960ce9d0d7176e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sun, 16 Apr 2017 19:40:50 +0300
+Subject: [PATCH 5/7] Inherit config only from the same host
+
+---
+ surf.c | 62 +++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 45 insertions(+), 17 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index 3c3d20b..30ecf56 100644
+--- a/surf.c
++++ b/surf.c
+@@ -440,6 +440,24 @@ buildpath(const char *path)
+ 	return fpath;
+ }
+ 
++int match_hosts(const char *a, const char *b)
++{
++	int i;
++	const char *r, *uri = a;
++
++	r = uri;
++	for (i = 0; r && i < 3; i++) {
++		r++;
++		r = strchr(r, '/');
++	}
++
++	if (!r)
++		return 0;
++
++	i = strncmp(a, b, r-uri) == 0;
++	return i;
++}
++
+ Client *
+ newclient(Client *rc)
+ {
+@@ -817,31 +835,19 @@ newwindow(Client *c, const Arg *a, int noembed)
+ 	const Arg arg = { .v = cmd };
+ 
+ 	cmd[i++] = argv0;
+-	cmd[i++] = "-a";
+-	cmd[i++] = curconfig[CookiePolicies].val.v;
+-	cmd[i++] = curconfig[ScrollBars].val.b ? "-B" : "-b";
+-	if (cookiefile && g_strcmp0(cookiefile, "")) {
+-		cmd[i++] = "-c";
+-		cmd[i++] = cookiefile;
+-	}
+-	cmd[i++] = curconfig[DiskCache].val.b ? "-D" : "-d";
+ 	if (embed && !noembed) {
+ 		cmd[i++] = "-e";
+ 		snprintf(tmp, LENGTH(tmp), "%lu", embed);
+ 		cmd[i++] = tmp;
+ 	}
+-	cmd[i++] = curconfig[RunInFullscreen].val.b ? "-F" : "-f" ;
+-	cmd[i++] = curconfig[Geolocation].val.b ?     "-G" : "-g" ;
+-	cmd[i++] = curconfig[LoadImages].val.b ?      "-I" : "-i" ;
+-	cmd[i++] = curconfig[KioskMode].val.b ?       "-K" : "-k" ;
+-	cmd[i++] = curconfig[Style].val.b ?           "-M" : "-m" ;
+-	cmd[i++] = curconfig[Inspector].val.b ?       "-N" : "-n" ;
+-	cmd[i++] = curconfig[Plugins].val.b ?         "-P" : "-p" ;
++	if (cookiefile && g_strcmp0(cookiefile, "")) {
++		cmd[i++] = "-c";
++		cmd[i++] = cookiefile;
++	}
+ 	if (scriptfile && g_strcmp0(scriptfile, "")) {
+ 		cmd[i++] = "-r";
+ 		cmd[i++] = scriptfile;
+ 	}
+-	cmd[i++] = curconfig[JavaScript].val.b ? "-S" : "-s";
+ 	if (stylefile && g_strcmp0(stylefile, "")) {
+ 		cmd[i++] = "-t";
+ 		cmd[i++] = stylefile;
+@@ -852,6 +858,21 @@ newwindow(Client *c, const Arg *a, int noembed)
+ 	}
+ 	if (showxid)
+ 		cmd[i++] = "-x";
++
++	if (match_hosts(geturi(c), a->v)) {
++		cmd[i++] = "-a";
++		cmd[i++] = curconfig[CookiePolicies].val.v;
++		cmd[i++] = curconfig[ScrollBars].val.b ?      "-B" : "-b";
++		cmd[i++] = curconfig[DiskCache].val.b ?       "-D" : "-d";
++		cmd[i++] = curconfig[JavaScript].val.b ?      "-S" : "-s";
++		cmd[i++] = curconfig[RunInFullscreen].val.b ? "-F" : "-f";
++		cmd[i++] = curconfig[Geolocation].val.b ?     "-G" : "-g";
++		cmd[i++] = curconfig[LoadImages].val.b ?      "-I" : "-i";
++		cmd[i++] = curconfig[KioskMode].val.b ?       "-K" : "-k";
++		cmd[i++] = curconfig[Style].val.b ?           "-M" : "-m";
++		cmd[i++] = curconfig[Inspector].val.b ?       "-N" : "-n";
++		cmd[i++] = curconfig[Plugins].val.b ?         "-P" : "-p";
++	}
+ 	/* do not keep zoom level */
+ 	cmd[i++] = "--";
+ 	if ((uri = a->v))
+@@ -1028,6 +1049,7 @@ GtkWidget *
+ createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)
+ {
+ 	Client *n;
++	Arg arg;
+ 
+ 	switch (webkit_navigation_action_get_navigation_type(a)) {
+ 	case WEBKIT_NAVIGATION_TYPE_OTHER: /* fallthrough */
+@@ -1043,7 +1065,13 @@ createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)
+ 	case WEBKIT_NAVIGATION_TYPE_BACK_FORWARD: /* fallthrough */
+ 	case WEBKIT_NAVIGATION_TYPE_RELOAD: /* fallthrough */
+ 	case WEBKIT_NAVIGATION_TYPE_FORM_RESUBMITTED:
+-		n = newclient(c);
++		arg.v = webkit_uri_request_get_uri(webkit_navigation_action_get_request(a));
++		if (match_hosts(geturi(c), arg.v)) {
++			n = newclient(c);
++		} else {
++			newwindow(clients, &arg, 1);
++			return NULL;
++		}
+ 		break;
+ 	default:
+ 		return NULL;
+-- 
+2.10.2
+

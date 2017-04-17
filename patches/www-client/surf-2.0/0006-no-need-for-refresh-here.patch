@@ -1,0 +1,25 @@
+From 6fa25af5efb0ebdbbf48c22bb707dfc96c87f461 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sun, 16 Apr 2017 22:49:27 +0300
+Subject: [PATCH 6/7] no need for refresh here
+
+---
+ surf.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/surf.c b/surf.c
+index 30ecf56..354dbb2 100644
+--- a/surf.c
++++ b/surf.c
+@@ -695,6 +695,7 @@ setparameter(Client *c, int refresh, ParamName p, const Arg *a)
+ 		return; /* do nothing */
+ 	case LoadImages:
+ 		webkit_settings_set_auto_load_images(s, a->b);
++		refresh = 0;
+ 		break;
+ 	case MediaManualPlay:
+ 		webkit_settings_set_media_playback_requires_user_gesture(s, a->b);
+-- 
+2.10.2
+

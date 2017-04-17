@@ -1,0 +1,35 @@
+From 262f88016b279de5e02849a2cc69b058fe9798a2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sat, 8 Apr 2017 09:57:48 +0300
+Subject: [PATCH 3/7] Better zooming
+
+---
+ surf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index 62cff7e..74ced43 100644
+--- a/surf.c
++++ b/surf.c
+@@ -1503,14 +1503,14 @@ clipboard(Client *c, const Arg *a)
+ void
+ zoom(Client *c, const Arg *a)
+ {
+-	if (a->i > 0)
++	if (a->i == 1)
+ 		webkit_web_view_set_zoom_level(c->view,
+ 		                               curconfig[ZoomLevel].val.f + 0.1);
+-	else if (a->i < 0)
++	else if (a->i == -1)
+ 		webkit_web_view_set_zoom_level(c->view,
+ 		                               curconfig[ZoomLevel].val.f - 0.1);
+ 	else
+-		webkit_web_view_set_zoom_level(c->view, 1.0);
++		webkit_web_view_set_zoom_level(c->view, a->f);
+ 
+ 	curconfig[ZoomLevel].val.f = webkit_web_view_get_zoom_level(c->view);
+ }
+-- 
+2.10.2
+

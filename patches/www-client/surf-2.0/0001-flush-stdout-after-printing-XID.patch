@@ -1,0 +1,25 @@
+From e215112f74a6a548a30bfa3eb898fdae50036751 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sat, 8 Apr 2017 08:03:45 +0300
+Subject: [PATCH 1/7] flush stdout after printing XID
+
+---
+ surf.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/surf.c b/surf.c
+index 93a1629..32ea665 100644
+--- a/surf.c
++++ b/surf.c
+@@ -1159,6 +1159,7 @@ showview(WebKitWebView *v, Client *c)
+ 	if (showxid) {
+ 		gdk_display_sync(gtk_widget_get_display(c->win));
+ 		puts(winid);
++		fflush(stdout);
+ 	}
+ 
+ 	if (curconfig[HideBackground].val.b)
+-- 
+2.10.2
+

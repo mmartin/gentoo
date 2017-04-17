@@ -1,0 +1,57 @@
+From fd877face11516018720522f4b87db1fb4028d91 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sat, 8 Apr 2017 09:22:48 +0300
+Subject: [PATCH 2/7] Better scrolling
+
+---
+ surf.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index 32ea665..62cff7e 100644
+--- a/surf.c
++++ b/surf.c
+@@ -1519,6 +1519,8 @@ void
+ scroll(Client *c, const Arg *a)
+ {
+ 	GdkEvent *ev = gdk_event_new(GDK_KEY_PRESS);
++	unsigned int i, n = 1;
++	gint width, height;
+ 
+ 	gdk_event_set_device(ev, gdkkb);
+ 	ev->key.window = gtk_widget_get_window(GTK_WIDGET(c->win));
+@@ -1530,7 +1532,9 @@ scroll(Client *c, const Arg *a)
+ 		ev->key.keyval = GDK_KEY_Down;
+ 		break;
+ 	case 'D':
+-		ev->key.keyval = GDK_KEY_Page_Down;
++		ev->key.keyval = GDK_KEY_Down;
++		gtk_window_get_size(GTK_WINDOW(c->win), &width, &height);
++		n = MAX(1, height / 42 * 0.3);
+ 		break;
+ 	case 'l':
+ 		ev->key.keyval = GDK_KEY_Left;
+@@ -1539,14 +1543,17 @@ scroll(Client *c, const Arg *a)
+ 		ev->key.keyval = GDK_KEY_Right;
+ 		break;
+ 	case 'U':
+-		ev->key.keyval = GDK_KEY_Page_Up;
++		ev->key.keyval = GDK_KEY_Up;
++		gtk_window_get_size(GTK_WINDOW(c->win), &width, &height);
++		n = MAX(1, height / 42 * 0.3);
+ 		break;
+ 	case 'u':
+ 		ev->key.keyval = GDK_KEY_Up;
+ 		break;
+ 	}
+ 
+-	gdk_event_put(ev);
++	for (i = 0; i < n; i++)
++		gdk_event_put(ev);
+ }
+ 
+ void
+-- 
+2.10.2
+
