@@ -38,19 +38,19 @@ static Parameter defconfig[ParameterLast] = {
 };
 
 static UriParameters uriparams[] = {
-	{ "http://192.168.9.1(/|$)", {
+	{ "^http://192.168.9.1(/|$)", {
 	  FSETB(JavaScript, 1),
 	}, },
-	{ "https://theoldreader.com(/|$)", {
+	{ "^https://theoldreader.com(/|$)", {
 	  FSETB(JavaScript, 1),
 	  FSETV(CookiePolicies, "@"),
 	}, },
-	{ "https://mail.google.com(/|$)", {
+	{ "^https://mail.google.com(/|$)", {
 	  FSETB(JavaScript, 1),
 	  FSETB(LoadImages, 1),
 	  FSETV(CookiePolicies, "@"),
 	}, },
-	{ "https://github.com/|$)", {
+	{ "^https://github.com(/|$)", {
 	  FSETB(JavaScript, 1),
 	  FSETV(CookiePolicies, "@"),
 	}, },
