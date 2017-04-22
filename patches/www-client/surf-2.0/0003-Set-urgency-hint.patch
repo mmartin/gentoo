@@ -1,15 +1,15 @@
-From ceba4e75a31ab028b10799c656cc3244f1309e20 Mon Sep 17 00:00:00 2001
+From 1502784666d9ac12cf7c525f020d2b515b2c9eef Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sat, 8 Apr 2017 11:26:21 +0300
-Subject: [PATCH 4/7] urgency hint
+Subject: [PATCH 3/8] Set urgency hint
 
 ---
  surf.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/surf.c b/surf.c
-index 74ced43..3c3d20b 100644
+index 18c9bde..a9ad5df 100644
 --- a/surf.c
 +++ b/surf.c
 @@ -1104,6 +1104,11 @@ winevent(GtkWidget *w, GdkEvent *e, Client *c)

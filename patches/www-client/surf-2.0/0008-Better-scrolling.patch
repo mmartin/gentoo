@@ -1,23 +1,23 @@
-From b33e41376b17b9369c23e118dd0137edaf854e8e Mon Sep 17 00:00:00 2001
+From aee5a2dae0bd103f1657deda231e19bbf5f618c2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sat, 8 Apr 2017 09:22:48 +0300
-Subject: [PATCH 2/7] Better scrolling
+Subject: [PATCH 8/8] Better scrolling
 
 ---
  surf.c | 18 +++++++++---------
  1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/surf.c b/surf.c
-index 32ea665..72b6e53 100644
+index 3cf9642..e650125 100644
 --- a/surf.c
 +++ b/surf.c
-@@ -1518,6 +1518,12 @@ zoom(Client *c, const Arg *a)
+@@ -1642,6 +1642,12 @@ zoom(Client *c, const Arg *a)
  void
  scroll(Client *c, const Arg *a)
  {
 +	if (strchr("UD", a->i)) {
-+		evalscript(c, "window.scrollBy(0, %f * window.innerHeight)",
++		evalscript(c, JSCNone, "window.scrollBy(0, %f * window.innerHeight)",
 +		           (a->i == 'U' ? -1 : 1) * 0.42);
 +		return;
 +	}
@@ -25,7 +25,7 @@ index 32ea665..72b6e53 100644
  	GdkEvent *ev = gdk_event_new(GDK_KEY_PRESS);
  
  	gdk_event_set_device(ev, gdkkb);
-@@ -1526,24 +1532,18 @@ scroll(Client *c, const Arg *a)
+@@ -1650,24 +1656,18 @@ scroll(Client *c, const Arg *a)
  	ev->key.time = GDK_CURRENT_TIME;
  
  	switch (a->i) {

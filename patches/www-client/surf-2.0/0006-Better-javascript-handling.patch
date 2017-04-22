@@ -1,15 +1,15 @@
-From f5a08c03e8bd538801e5b03533865638b9a25d99 Mon Sep 17 00:00:00 2001
+From 8f842e08d871793e14a13165b4120243bfc38182 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Mon, 17 Apr 2017 14:46:15 +0300
-Subject: [PATCH 7/7] better javascript handling?
+Subject: [PATCH 6/8] Better javascript handling
 
 ---
  surf.c | 23 ++++++++++++++++++++---
  1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/surf.c b/surf.c
-index 354dbb2..22ca4b1 100644
+index 3cb64d3..d59abc7 100644
 --- a/surf.c
 +++ b/surf.c
 @@ -165,6 +165,7 @@ static void setparameter(Client *c, int refresh, ParamName p, const Arg *a);

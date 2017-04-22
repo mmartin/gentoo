@@ -1,15 +1,15 @@
-From 3cc04d6dfeaf2e9a7d017241d0960ce9d0d7176e Mon Sep 17 00:00:00 2001
+From e698e124bd2b6b30bd38b0c444205a692df76dd1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sun, 16 Apr 2017 19:40:50 +0300
-Subject: [PATCH 5/7] Inherit config only from the same host
+Subject: [PATCH 4/8] Inherit config only from the same host
 
 ---
  surf.c | 62 +++++++++++++++++++++++++++++++++++++++++++++-----------------
  1 file changed, 45 insertions(+), 17 deletions(-)
 
 diff --git a/surf.c b/surf.c
-index 3c3d20b..30ecf56 100644
+index a9ad5df..0a150e3 100644
 --- a/surf.c
 +++ b/surf.c
 @@ -440,6 +440,24 @@ buildpath(const char *path)
