@@ -1,0 +1,109 @@
+From 96d930241be3a1bc3049adc1659eea2f16f2a675 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Mon, 24 Apr 2017 22:01:05 +0300
+Subject: [PATCH 10/10] Separate config item for HTML5 local storage & databse
+
+---
+ surf.c | 36 +++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
+
+diff --git a/surf.c b/surf.c
+index f684c73..0186f0a 100644
+--- a/surf.c
++++ b/surf.c
+@@ -62,6 +62,7 @@ typedef enum {
+ 	CaretBrowsing,
+ 	CookiePolicies,
+ 	DiskCache,
++	HTML5Storage,
+ 	DNSPrefetch,
+ 	FontSize,
+ 	FrameFlattening,
+@@ -238,7 +239,7 @@ static void clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h);
+ static void clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h);
+ 
+ static char winid[64];
+-static char togglestats[10];
++static char togglestats[11];
+ static char pagestats[2];
+ static Atom atoms[AtomLast];
+ static Window embed;
+@@ -595,12 +596,13 @@ gettogglestats(Client *c)
+ 	togglestats[1] = curconfig[CaretBrowsing].val.b ?   'C' : 'c';
+ 	togglestats[2] = curconfig[Geolocation].val.b ?     'G' : 'g';
+ 	togglestats[3] = curconfig[DiskCache].val.b ?       'D' : 'd';
+-	togglestats[4] = curconfig[LoadImages].val.b ?      'I' : 'i';
+-	togglestats[5] = curconfig[JavaScript].val.b ?      'S' : 's';
+-	togglestats[6] = curconfig[Plugins].val.b ?         'V' : 'v';
+-	togglestats[7] = curconfig[Style].val.b ?           'M' : 'm';
+-	togglestats[8] = curconfig[FrameFlattening].val.b ? 'F' : 'f';
+-	togglestats[9] = '\0';
++	togglestats[4] = curconfig[HTML5Storage].val.b ?    'H' : 'h';
++	togglestats[5] = curconfig[LoadImages].val.b ?      'I' : 'i';
++	togglestats[6] = curconfig[JavaScript].val.b ?      'S' : 's';
++	togglestats[7] = curconfig[Plugins].val.b ?         'V' : 'v';
++	togglestats[8] = curconfig[Style].val.b ?           'M' : 'm';
++	togglestats[9] = curconfig[FrameFlattening].val.b ? 'F' : 'f';
++	togglestats[10] = '\0';
+ }
+ 
+ void
+@@ -682,7 +684,12 @@ setparameter(Client *c, int refresh, ParamName p, const Arg *a)
+ 		    webkit_web_view_get_context(c->view), a->b ?
+ 		    WEBKIT_CACHE_MODEL_WEB_BROWSER :
+ 		    WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER);
+-		return; /* do not update */
++		refresh = 0;
++		break;
++	case HTML5Storage:
++		webkit_settings_set_enable_html5_local_storage(s, a->b);
++		webkit_settings_set_enable_html5_database(s, a->b);
++		break;
+ 	case DNSPrefetch:
+ 		webkit_settings_set_enable_dns_prefetching(s, a->b);
+ 		return; /* do not update */
+@@ -913,7 +920,7 @@ newwindow(Client *c, const Arg *a, int noembed)
+ {
+ 	int i = 0;
+ 	char tmp[64];
+-	const char *cmd[26], *uri;
++	const char *cmd[27], *uri;
+ 	const Arg arg = { .v = cmd };
+ 
+ 	cmd[i++] = argv0;
+@@ -946,6 +953,7 @@ newwindow(Client *c, const Arg *a, int noembed)
+ 		cmd[i++] = curconfig[CookiePolicies].val.v;
+ 		cmd[i++] = curconfig[ScrollBars].val.b ?      "-B" : "-b";
+ 		cmd[i++] = curconfig[DiskCache].val.b ?       "-D" : "-d";
++		cmd[i++] = curconfig[HTML5Storage].val.b ?    "-H" : "-h";
+ 		cmd[i++] = curconfig[JavaScript].val.b ?      "-S" : "-s";
+ 		cmd[i++] = curconfig[RunInFullscreen].val.b ? "-F" : "-f";
+ 		cmd[i++] = curconfig[Geolocation].val.b ?     "-G" : "-g";
+@@ -1028,8 +1036,8 @@ newview(Client *c, WebKitWebView *rv)
+ 		   "enable-developer-extras", curconfig[Inspector].val.b,
+ 		   "enable-dns-prefetching", curconfig[DNSPrefetch].val.b,
+ 		   "enable-frame-flattening", curconfig[FrameFlattening].val.b,
+-		   "enable-html5-database", curconfig[DiskCache].val.b,
+-		   "enable-html5-local-storage", curconfig[DiskCache].val.b,
++		   "enable-html5-database", curconfig[HTML5Storage].val.b,
++		   "enable-html5-local-storage", curconfig[HTML5Storage].val.b,
+ 		   "enable-javascript", curconfig[JavaScript].val.b,
+ 		   "enable-plugins", curconfig[Plugins].val.b,
+ 		   "enable-accelerated-2d-canvas", curconfig[AcceleratedCanvas].val.b,
+@@ -1816,6 +1824,12 @@ main(int argc, char *argv[])
+ 	case 'G':
+ 		defconfig CSETB(Geolocation, 1);
+ 		break;
++	case 'h':
++		defconfig CSETB(HTML5Storage, 0);
++		break;
++	case 'H':
++		defconfig CSETB(HTML5Storage, 1);
++		break;
+ 	case 'i':
+ 		defconfig CSETB(LoadImages, 0);
+ 		break;
+-- 
+2.10.2
+

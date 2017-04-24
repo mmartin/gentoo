@@ -1,0 +1,29 @@
+From 316972cb1604e404f198820508827e1fce93a572 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
+ <macs.martins@gmail.com>
+Date: Sun, 23 Apr 2017 17:03:17 +0300
+Subject: [PATCH 09/10] Sync after property change?
+
+---
+ surf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/surf.c b/surf.c
+index e650125..f684c73 100644
+--- a/surf.c
++++ b/surf.c
+@@ -537,10 +537,10 @@ geturi(Client *c)
+ void
+ setatom(Client *c, int a, const char *v)
+ {
+-	XSync(dpy, False);
+ 	XChangeProperty(dpy, c->xid,
+ 	                atoms[a], XA_STRING, 8, PropModeReplace,
+ 	                (unsigned char *)v, strlen(v) + 1);
++	XSync(dpy, False);
+ }
+ 
+ const char *
+-- 
+2.10.2
+

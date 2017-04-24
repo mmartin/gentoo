@@ -2,7 +2,7 @@ From c0557974c71c0e23568a1d8bf0e4cb74128712fa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sun, 16 Apr 2017 22:49:27 +0300
-Subject: [PATCH 5/8] No need for refresh here
+Subject: [PATCH 05/10] No need for refresh here
 
 ---
  surf.c | 1 +

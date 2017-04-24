@@ -2,7 +2,7 @@ From e3e30967444a87ec5245ed9e3e234e3cd83a133c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sat, 8 Apr 2017 08:03:45 +0300
-Subject: [PATCH 1/8] Flush stdout after printing XID
+Subject: [PATCH 01/10] Flush stdout after printing XID
 
 ---
  surf.c | 1 +

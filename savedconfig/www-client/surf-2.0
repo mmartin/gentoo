@@ -14,6 +14,7 @@ static Parameter defconfig[ParameterLast] = {
 	SETB(CaretBrowsing,      0),
 	SETV(CookiePolicies,     "a@"),
 	SETB(DiskCache,          0),
+	SETB(HTML5Storage,       0),
 	SETB(DNSPrefetch,        0),
 	SETI(FontSize,           16),
 	SETB(FrameFlattening,    0),
@@ -54,6 +55,12 @@ static UriParameters uriparams[] = {
 	  FSETB(JavaScript, 1),
 	  FSETV(CookiePolicies, "@"),
 	}, },
+	{ "^http://meteo.lv(/|$)", {
+	  FSETB(JavaScript, 1),
+	  FSETB(LoadImages, 1),
+	  FSETB(DiskCache, 1),
+	}, },
+
 };
 
 static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
@@ -155,6 +162,8 @@ static Key keys[] = {
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_c,      toggle,     { .i = CaretBrowsing } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
+	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_d,      toggle,     { .i = DiskCache } },
+	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_h,      toggle,     { .i = HTML5Storage } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_v,      toggle,     { .i = Plugins } },

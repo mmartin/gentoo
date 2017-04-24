@@ -2,7 +2,7 @@ From e698e124bd2b6b30bd38b0c444205a692df76dd1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sun, 16 Apr 2017 19:40:50 +0300
-Subject: [PATCH 4/8] Inherit config only from the same host
+Subject: [PATCH 04/10] Inherit config only from the same host
 
 ---
  surf.c | 62 +++++++++++++++++++++++++++++++++++++++++++++-----------------

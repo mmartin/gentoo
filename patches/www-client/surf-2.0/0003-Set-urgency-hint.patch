@@ -2,7 +2,7 @@ From 1502784666d9ac12cf7c525f020d2b515b2c9eef Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C4=81rti=C5=86=C5=A1=20Ma=C4=8Ds?=
  <macs.martins@gmail.com>
 Date: Sat, 8 Apr 2017 11:26:21 +0300
-Subject: [PATCH 3/8] Set urgency hint
+Subject: [PATCH 03/10] Set urgency hint
 
 ---
  surf.c | 8 ++++++++
