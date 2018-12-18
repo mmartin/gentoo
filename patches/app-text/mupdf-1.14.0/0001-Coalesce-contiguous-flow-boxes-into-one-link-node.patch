@@ -1,6 +1,6 @@
---- mupdf-1.10a-source-orig/source/html/html-layout.c	2016-11-28 15:34:04.000000000 +0200
-+++ mupdf-1.10a-source/source/html/html-layout.c	2017-01-27 18:12:47.577100475 +0200
-@@ -1938,7 +1938,6 @@
+--- mupdf-1.14.0-source-orig/source/html/html-layout.c	2016-11-28 15:34:04.000000000 +0200
++++ mupdf-1.14.0-source/source/html/html-layout.c	2017-01-27 18:12:47.577100475 +0200
+@@ -2072,7 +2072,6 @@
  	fz_rect bbox;
  	const char *dest;
  	const char *href;
@@ -8,7 +8,7 @@
  
  	while (flow)
  	{
-@@ -1946,27 +1945,27 @@
+@@ -2080,27 +2079,27 @@
  		next = flow->next;
  		if (href && (int)(flow->y / page_h) == page)
  		{
@@ -39,15 +39,15 @@
 +			while (next && has_same_href(next->box, href))
  			{
 -				/* flow->y is the baseline, adjust bbox appropriately */
--				bbox.y0 -= 0.8 * flow->h;
--				bbox.y1 -= 0.8 * flow->h;
+-				bbox.y0 -= 0.8f * flow->h;
+-				bbox.y1 -= 0.8f * flow->h;
 +				fz_rect bbox_next;
 +				CALC_BOX(bbox_next, next)
 +
 +				if (fz_abs((bbox.x0 + bbox.x1) - (bbox_next.x0 + bbox_next.x1)) - (bbox.x1 - bbox.x0 + bbox_next.x1 - bbox_next.x0) > 0.0001 ||
 +				    fz_abs((bbox.y0 + bbox.y1) - (bbox_next.y0 + bbox_next.y1)) - (bbox.y1 - bbox.y0 + bbox_next.y1 - bbox_next.y0) > 0.0001) break;
 +
-+				fz_union_rect(&bbox, &bbox_next);
++				bbox = fz_union_rect(bbox, bbox_next);
 +				next = next->next;
  			}
 +#undef CALC_BOX

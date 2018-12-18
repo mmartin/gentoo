@@ -1,0 +1,10 @@
+--- girara-0.3.1-orig/data/girara.css_t	2017-01-11 22:59:09.000000000 +0200
++++ girara-0.3.1/data/girara.css_t	2017-01-29 17:09:44.303209161 +0200
+@@ -21,6 +21,7 @@
+ 
+ #@session@ entry.inputbar {
+   background-color: @inputbar-bg@;
++  caret-color: @inputbar-fg@;
+ }
+ 
+ #@session@ .inputbar {

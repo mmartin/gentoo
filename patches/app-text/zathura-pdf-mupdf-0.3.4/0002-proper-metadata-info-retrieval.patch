@@ -1,11 +1,11 @@
---- zathura-pdf-mupdf-0.3.1-orig/document.c	2017-01-11 23:21:14.000000000 +0200
-+++ zathura-pdf-mupdf-0.3.1/document.c	2017-01-30 11:16:17.666485592 +0200
+--- zathura-pdf-mupdf-0.3.4-orig/zathura-pdf-mupdf/document.c	2017-01-11 23:21:14.000000000 +0200
++++ zathura-pdf-mupdf-0.3.4/zathura-pdf-mupdf/document.c	2017-01-30 11:16:17.666485592 +0200
 @@ -135,9 +135,6 @@
    }
  
    fz_try (mupdf_document->ctx) {
 -    pdf_obj* trailer = pdf_trailer(mupdf_document->ctx, (pdf_document*) mupdf_document->document);
--    pdf_obj* info_dict = pdf_dict_get(mupdf_document->ctx, trailer, PDF_NAME_Info);
+-    pdf_obj* info_dict = pdf_dict_get(mupdf_document->ctx, trailer, PDF_NAME(Info));
 -
      /* get string values */
      typedef struct info_value_s {

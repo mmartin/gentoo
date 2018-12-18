@@ -1,5 +1,5 @@
---- zathura-0.3.7-orig/zathura/callbacks.c	2016-03-08 22:48:07.000000000 +0200
-+++ zathura-0.3.7/zathura/callbacks.c	2017-01-29 06:39:10.911603503 +0200
+--- zathura-0.4.1-orig/zathura/callbacks.c	2016-03-08 22:48:07.000000000 +0200
++++ zathura-0.4.1/zathura/callbacks.c	2017-01-29 06:39:10.911603503 +0200
 @@ -323,14 +323,14 @@
    unsigned int number_of_pages = zathura_document_get_number_of_pages(zathura->document);
    for (unsigned int page_id = 0; page_id < number_of_pages; page_id++) {

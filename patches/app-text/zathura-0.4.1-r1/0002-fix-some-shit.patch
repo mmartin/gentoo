@@ -1,0 +1,29 @@
+--- zathura-0.3.7-orig/zathura/shortcuts.c	2017-01-11 23:05:00.000000000 +0200
++++ zathura-0.3.7/zathura/shortcuts.c	2017-01-31 13:21:38.680214749 +0200
+@@ -140,7 +140,7 @@
+ 
+   /* ask for input */
+   if (show_links) {
+-    zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
++    //zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
+     girara_dialog(zathura->ui.session, "Display link:", FALSE, NULL,
+         cb_sc_display_link,
+         zathura->ui.session);
+@@ -158,7 +158,7 @@
+   zathura_t* zathura = session->global.data;
+   g_return_val_if_fail(argument != NULL, false);
+ 
+-  zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
++  //zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
+ 
+   if (gtk_widget_get_visible(GTK_WIDGET(session->gtk.inputbar)) == false) {
+     gtk_widget_show(GTK_WIDGET(session->gtk.inputbar));
+@@ -229,7 +229,7 @@
+ 
+   /* ask for input */
+   if (show_links == true) {
+-    zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
++    //zathura_document_set_adjust_mode(zathura->document, ZATHURA_ADJUST_INPUTBAR);
+     girara_dialog(zathura->ui.session, "Follow link:", FALSE, NULL, cb_sc_follow, zathura->ui.session);
+   }
+ 
