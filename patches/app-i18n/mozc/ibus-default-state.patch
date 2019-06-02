@@ -1,0 +1,18 @@
+--- src-orig/unix/ibus/property_handler.cc	2019-05-31 23:11:16.513019066 +0300
++++ src/unix/ibus/property_handler.cc	2019-05-31 23:11:54.189205893 +0300
+@@ -75,15 +75,7 @@
+   return disabled;
+ }
+ 
+-// Some users expect that Mozc is turned off by default on IBus 1.5.0 and later.
+-// https://github.com/google/mozc/issues/201
+-// On IBus 1.4.x, IBus expects that an IME should always be turned on and
+-// IME on/off keys are handled by IBus itself rather than each IME.
+-#if IBUS_CHECK_VERSION(1, 5, 0)
+-const bool kActivatedOnLaunch = false;
+-#else
+ const bool kActivatedOnLaunch = true;
+-#endif  // IBus>=1.5.0
+ 
+ }  // namespace
+ 
